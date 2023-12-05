@@ -1,24 +1,25 @@
+import axios from 'axios'
 import React, {useEffect, useState} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { BlogItem, Button, Gap } from '../../components'
 import './home.css'
-import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import {useDispatch, useSelector} from 'react-redux'
+
 
 const Home = () => {
   // const [dataBlog, setDataBlog] = useState([]);
-  const {dataBlogs, name} =  useSelector(state=>state);
+  const {dataBlog} =  useSelector(state=>state.homeReducer);
   const dispatch = useDispatch();
 
-  console.log('State Global : ', dataBlogs)
+  // console.log('State Global : ', dataBlogs)
   useEffect(() => {
-    setTimeout(() => {
-      dispatch({type:'UPDATE_NAME'})
-    },3000)
+    // setTimeout(() => {
+    //   dispatch({type:'UPDATE_NAME'})
+    // },3000)
 
     axios.get('http://localhost:3000/v1/blog/posts')
     .then(result => {
-      console.log('Data API :', result.data);
+      // console.log('Data API :', result.data);
       const responseAPI = result.data;
 
       // setDataBlog(responseAPI.data); 
@@ -43,7 +44,7 @@ const Home = () => {
       </div>
       <Gap height={20} />
       <div className='content-wrapper'>
-        {dataBlogs.map(blog => {
+        {dataBlog.map(blog => {
           return (
             <BlogItem 
               key={blog._id} 
