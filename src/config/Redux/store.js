@@ -1,5 +1,6 @@
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import reducer from './reducer/reducer';
+import { thunk } from 'redux-thunk';
 
 // Single Reducer
 // const initialState = {
@@ -22,5 +23,5 @@ import reducer from './reducer/reducer';
 //     }
 //     return state;
 // }
-const store = createStore(reducer);
+const store = createStore(reducer, applyMiddleware(thunk));
 export default store;
