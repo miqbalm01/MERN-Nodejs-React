@@ -1,10 +1,13 @@
-// import axios from 'axios'
+import axios from 'axios'
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { BlogItem, Button, Gap } from '../../components'
 import './home.css'
 import { setDataBlog } from '../../config/Redux/action'
+import { confirmAlert } from 'react-confirm-alert'
+import 'react-confirm-alert/src/react-confirm-alert.css'
+
 
 
 const Home = () => {
@@ -33,6 +36,32 @@ const Home = () => {
     console.log(counter);
   };
 
+  const confirmDelete = (id) => {
+    confirmAlert({
+      title: 'Confirm to Delete',
+      message: 'Apakah Anda yakin akan menghapuas post ini?',
+      buttons: [
+        {
+          label: 'Ya',
+          onClick: () => {
+            axios.delete(`http://localhost:3000/v1/blog/post/${id}`)
+            .then(res => {
+              console.log('success ', res.data)
+              dispatch(setDataBlog(counter))
+            })
+            .catch(err => {
+              console.log('Error :', err);
+            })
+          }
+        },
+        {
+          label: 'Tidak',
+          onClick: () => console.log('User Tidak Setuju')
+        }
+      ]
+    });
+  };
+
   return (
     <div className='home-page-wrapper'>
       <div className='create-wrapper'>
@@ -51,6 +80,7 @@ const Home = () => {
               name={blog.author.name}
               date={blog.createdAt}
               _id={blog._id}
+              onDelete={confirmDelete}
             />
           )
         })}
