@@ -1,4 +1,4 @@
 module.exports = {
-  projectId: "8y7n1f",
+  projectId: "3zev8r",
   // ...rest of the Cypress project config
 }
